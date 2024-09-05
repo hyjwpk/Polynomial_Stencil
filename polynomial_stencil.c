@@ -6,6 +6,7 @@ void polynomial_stencil(double *fa, double *f, long nx, double p[], int term)
 
     long i;
     int j;
+    #pragma omp parallel for private(j)
     for (i = 0; i < nx; i++) {
         for (j = 0; j < term; j++) {
             if ((i + j - idx) < 0 || (i + j - idx) >= nx) {
