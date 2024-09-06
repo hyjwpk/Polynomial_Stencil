@@ -16,6 +16,7 @@ void polynomial_stencil_verify(double *fa, double *f, long nx, double p[], int t
     long i;
     int j;
     for (i = 0; i < nx; i++) {
+        fa[i] = 0;
         for (j = 0; j < term; j++) {
 
             // 超出边界的点按零处理
