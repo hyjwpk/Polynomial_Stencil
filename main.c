@@ -95,6 +95,8 @@ int main(int argc, char *argv[])
         printf("test %d , nx %ld, term %d, p0: %lf, p[-1]: %lf\n", test, nx, term, p[0], p[term - 1]);
 
         for (iter = 1; iter <= ITER_TIMES; iter++) {
+            memset(fa, 0, nx * sizeof(double));
+            memset(fb, 0, nx * sizeof(double));
             srand(iter);
             for (j = 0; j < nx; j++) {
                 f[j] = (double)(rand() / (double)(RAND_MAX / max_num) + 2);
@@ -103,7 +105,6 @@ int main(int argc, char *argv[])
             polynomial_stencil(fa, f, nx, p, term);
 
             gettimeofday(&stop, (struct timezone *)0);
-            memset(fb, 0, nx * sizeof(double));
             polynomial_stencil_verify(fb, f, nx, p, term);
 
             iter_time = (double)(stop.tv_sec - start.tv_sec) + (double)(stop.tv_usec - start.tv_usec) * 1.e-6;
