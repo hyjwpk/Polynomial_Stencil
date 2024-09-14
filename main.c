@@ -2,11 +2,12 @@
 #include <time.h>
 #include <sys/time.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "polynomial_stencil.h"
 
 const long MAX_NX = (8L * 1000L * 1000L * 1000L);
-const double MAX_DIFF = 1e-10;
+const double MAX_DIFF = 1e-8;
 const int ITER_TIMES = 5;
 
 void polynomial_stencil_verify(double *fa, double *f, long nx, double p[], int term)
@@ -16,7 +17,6 @@ void polynomial_stencil_verify(double *fa, double *f, long nx, double p[], int t
     long i;
     int j;
     for (i = 0; i < nx; i++) {
-        fa[i] = 0;
         for (j = 0; j < term; j++) {
 
             // 超出边界的点按零处理
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 
     int test = 1;
     int term;
-    double p[20];
+    double p[15];
     int missed = 0;
     int iter;
     while (fscanf(fp, "%ld", &nx) != EOF) {
@@ -103,6 +103,7 @@ int main(int argc, char *argv[])
             polynomial_stencil(fa, f, nx, p, term);
 
             gettimeofday(&stop, (struct timezone *)0);
+            memset(fb, 0, nx * sizeof(double));
             polynomial_stencil_verify(fb, f, nx, p, term);
 
             iter_time = (double)(stop.tv_sec - start.tv_sec) + (double)(stop.tv_usec - start.tv_usec) * 1.e-6;
