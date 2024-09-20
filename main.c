@@ -58,7 +58,7 @@ int CompareResults(double *se, double *seOpt, long size)
 int main(int argc, char *argv[])
 {
     long nx;
-    int i, j;
+    long i, j;
     double max_num = 2.0;
     struct timeval start, stop;
 
